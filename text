@@ -31,7 +31,7 @@ src/
 ).
 
 Δημιούργησε ένα δωρεάν API key εδώ:
-👉https://www.omdbapi.com/?t=blood+in+blood+out&apikey=6194636;     
+👉https://www.omdbapi.com/?t=blood+in+blood+out&apikey=6194636e
 
 Παράδειγμα fetch:
 
