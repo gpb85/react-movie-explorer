@@ -1,16 +1,18 @@
-import { useState } from "react";
-import { useMovies, type MoviesProps } from "../hooks/useMovies.ts";
-import SearchBar from "./SearchBar.tsx";
+import { type MovieProps } from "../types/movies";
+import MovieCard from "./MovieCard";
 
-export default function MovieList() {
-  const [query, setQuery] = useState("");
+interface MovieListProps {
+  movies: MovieProps[];
+}
 
-  const { movies, sortedMovies, isLoading, error } = useMovies(query);
+export default function MovieList({ movies }: MovieListProps) {
   return (
     <div>
-      <SearchBar query={query} onQueryChange={setQuery} />
-      {isLoading && <p>isLoading</p>}
-      {error && <p>{error}</p>}
+      {movies.map((movie) => (
+        <div key={movie.imdbID}>
+          <MovieCard movie={movie} />
+        </div>
+      ))}
     </div>
   );
 }

@@ -1,10 +1,7 @@
 import "./App.css";
-import MovieList from "./components/MovieList";
+
+import MovieSearchApp from "./components/MovieSearchApp";
 
 export default function App() {
-  return (
-    <div>
-      <MovieList />
-    </div>
-  );
+  return <MovieSearchApp />;
 }
