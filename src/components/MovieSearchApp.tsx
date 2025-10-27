@@ -10,8 +10,8 @@ export default function MovieSearchApp() {
     <div>
       <SearchBar query={query} onQueryChange={setQuery} />
       {isLoading && <p>Please wait..</p>}
-      {error && <p>something went wrong</p>}
-      <MovieList movies={movies} isLoading={isLoading} error={error} />
+      {error && <p>something went wrong</p>}s
+      <MovieList />
     </div>
   );
 }
