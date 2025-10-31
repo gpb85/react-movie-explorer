@@ -2,16 +2,17 @@ import { useState } from "react";
 import { useMovies } from "../hooks/useMovies";
 import SearchBar from "./SearchBar";
 import MovieList from "./MovieList";
+import Favorites from "./Favorites";
 
 export default function MovieSearchApp() {
   const [query, setQuery] = useState("");
-  const { movies, isLoading, error } = useMovies(query);
+  const { movies, isLoading, error } = useMovies("");
   return (
     <div>
-      <SearchBar query={query} onQueryChange={setQuery} />
       {isLoading && <p>Please wait..</p>}
-      {error && <p>something went wrong</p>}s
+      {error && <p>something went wrong</p>}
       <MovieList />
+      <Favorites />
     </div>
   );
 }

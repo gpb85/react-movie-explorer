@@ -6,7 +6,7 @@ import {
   useReducer,
   type ReactNode,
 } from "react";
-import type { MovieProps } from "../types/movies";
+import { type MovieProps } from "../types/movies";
 
 interface FavoritesState {
   favorites: MovieProps[];
@@ -55,29 +55,31 @@ interface FavoritesContextProps {
   removeFavorite: (id: string) => void;
 }
 
-const FavoritesContext = createContext<FavoritesContextProps | undefined>(
-  undefined
-);
+export const FavoritesContext = createContext<
+  FavoritesContextProps | undefined
+>(undefined);
 
 export function FavoritesContextProvider({
   children,
 }: {
   children: ReactNode;
 }) {
-  const [state, dispatch] = useReducer(favoritesReducer, { favorites: [] });
-
-  //effect favorites from local only once
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem("favorites");
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        dispatch({ type: "SET_FAVORITES", payload: parsed });
+  const [state, dispatch] = useReducer(
+    favoritesReducer,
+    { favorites: [] },
+    (initial) => {
+      try {
+        const saved = localStorage.getItem("favorites");
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed)) return { favorites: parsed };
+        }
+      } catch (error) {
+        console.error(error);
       }
-    } catch (error) {
-      console.warn("Something went wrong with local", error);
+      return initial;
     }
-  }, []);
+  );
 
   //save to local everytime something change
   useEffect(() => {
@@ -92,6 +94,8 @@ export function FavoritesContextProvider({
     dispatch({ type: "ADD_FAVORITE", payload: movie as MovieProps });
   };
 
+  //remove
+
   const removeFavorite = (id: string) => {
     dispatch({ type: "REMOVE_FAVORITE", payload: id as string });
   };
@@ -103,7 +107,7 @@ export function FavoritesContextProvider({
       addFavorite,
       removeFavorite,
     }),
-    [state.favorites]
+    [state.favorites, addFavorite, removeFavorite]
   );
   return (
     <FavoritesContext.Provider value={value}>
@@ -112,7 +116,7 @@ export function FavoritesContextProvider({
   );
 }
 
-export function useFavoritesContex() {
+export function useFavoritesContext() {
   const favoritesContext = useContext(FavoritesContext);
   if (favoritesContext === undefined) {
     throw new Error(

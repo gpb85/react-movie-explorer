@@ -41,13 +41,15 @@ export function useMovies(query: string): useMoviesResult {
     setError(null);
     try {
       const response = await fetch(
-        `${baseUrl}/?apikey=${apikey}&s=${searchQuery}`,
+        `${baseUrl}/?apikey=${apikey}&s="${searchQuery}"`,
         { signal: abortedControllerRef.current.signal }
       );
       if (!response.ok) {
         throw new Error(`HTTP error! Status:${response.status}`);
       }
       const data: ImdbIDApiResponse = await response.json();
+      //console.log(data);
+
       if (data.Response === "True" && data.Search) {
         setMovies(data.Search);
       } else {
