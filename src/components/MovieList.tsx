@@ -1,15 +1,12 @@
 import { useState } from "react";
-import { type MovieProps } from "../types/movies";
 import SearchBar from "./SearchBar";
 import { useMovies } from "../hooks/useMovies";
 
 import Carousel from "./Carousel";
 
-interface MovieListProps {
-  movies?: MovieProps[];
-}
+interface MovieListProps {}
 
-export default function MovieList({ movies }: MovieListProps) {
+export default function MovieList({}: MovieListProps) {
   const [query, setQuery] = useState("");
   const { movies: fetchedMovies, isLoading, error } = useMovies(query);
 

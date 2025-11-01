@@ -1,13 +1,9 @@
 import { useFavoritesContext } from "../context/FavoritesContext";
-import type { MovieProps } from "../types/movies";
-import Carousel from "./Carousel";
 
-interface FavoritesProps {
-  movies: MovieProps;
-}
+import Carousel from "./Carousel";
 
 export default function Favorites() {
   const { favorites } = useFavoritesContext();
 
-  return <Carousel movies={favorites} moviesPerPage={5} />;
+  return <Carousel movies={favorites} />;
 }
