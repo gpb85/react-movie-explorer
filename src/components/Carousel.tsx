@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { type MovieProps } from "../types/movies";
 import MovieCard from "./MovieCard";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import MovieDetailsCard from "./MovieDetailsCard";
 
 interface CarouselProps {
   movies: MovieProps[];
@@ -10,6 +11,14 @@ interface CarouselProps {
 export default function Carousel({ movies }: CarouselProps) {
   const [startIndex, setStartIndex] = useState(0);
   const [moviesPerPage, setMoviesPerPage] = useState(6);
+
+  const [selectedMovieID, setSelecteiMovieID] = useState<string | null>(null);
+  const handleShowDetails = (imdbID: string) => {
+    setSelecteiMovieID(imdbID);
+  };
+  const handleCloseDetails = () => {
+    setSelecteiMovieID(null);
+  };
 
   // Update moviesPerPage based on window width
   useEffect(() => {
@@ -58,9 +67,20 @@ export default function Carousel({ movies }: CarouselProps) {
                 className={`flex-none`}
                 style={{ width: `${100 / moviesPerPage}%` }}
               >
-                <MovieCard movie={movie} />
+                <MovieCard
+                  key={movie.imdbID}
+                  onShowDetails={handleShowDetails}
+                  movie={movie}
+                />
               </div>
             ))}
+            {/* MovieDetailsCard εμφανίζεται μόνο αν υπάρχει selectedMovieID */}
+            {selectedMovieID && (
+              <MovieDetailsCard
+                imdbID={selectedMovieID}
+                onClose={handleCloseDetails}
+              />
+            )}
           </div>
 
           {/* Right arrow */}

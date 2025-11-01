@@ -3,6 +3,14 @@ export interface MovieProps {
   Year: string;
   Poster: string;
   imdbID: string;
+  Awards: string;
+  imdbRating: string;
+  Director: string;
+  Plot: string;
+  Genre: string;
+  Actors: string;
+  Language: string;
+  Writer: string;
 }
 
 export interface ImdbIDApiResponse {

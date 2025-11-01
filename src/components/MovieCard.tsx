@@ -4,24 +4,24 @@ import { Heart } from "lucide-react";
 
 interface MovieCardProps {
   movie: MovieProps;
+  onShowDetails: (imdbID: string) => void;
 }
 
-export default function MovieCard({ movie }: MovieCardProps) {
+export default function MovieCard({ movie, onShowDetails }: MovieCardProps) {
   const { favorites, addFavorite, removeFavorite } = useFavoritesContext();
 
-  // ✅ Έλεγχος αν η ταινία υπάρχει στα favorites
   const isFavorite = favorites.some((m) => m.imdbID === movie.imdbID);
 
   return (
     <div className="bg-gray-900 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 relative group">
-      {/* Εικόνα */}
+      {/* Poster */}
       <img
         src={movie.Poster !== "N/A" ? movie.Poster : "/placeholder.jpg"}
         alt={movie.Title}
         className="w-full h-64 object-cover"
       />
 
-      {/* Πληροφορίες */}
+      {/* Info */}
       <div className="p-3 flex flex-col justify-between">
         <h3 className="text-white font-semibold text-sm truncate">
           {movie.Title}
@@ -44,11 +44,19 @@ export default function MovieCard({ movie }: MovieCardProps) {
         />
       </button>
 
-      {/* Overlay για hover effect */}
-      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center text-white text-xs pointer-events-none">
+      {/* Κουμπί Details */}
+      <button
+        onClick={() => onShowDetails(movie.imdbID)}
+        className="absolute bottom-2 right-2 p-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-xs z-10"
+      >
+        Details
+      </button>
+
+      {/* Overlay hover */}
+      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center text-white text-xs pointer-events-none">
         {isFavorite
-          ? "Click to remove from favorites"
-          : "Click to add to favorites"}
+          ? "Click heart to remove from favorites"
+          : "Click heart to add to favorites"}
       </div>
     </div>
   );

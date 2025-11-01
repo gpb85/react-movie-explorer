@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useMovies } from "../hooks/useMovies";
-import SearchBar from "./SearchBar";
+
 import MovieList from "./MovieList";
 import Favorites from "./Favorites";
 
